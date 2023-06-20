@@ -41,7 +41,7 @@ pipeline {
 
         stage('Remove snapshot...') {
             steps {
-                build job: 'DEV_pipeline_down', parameters: [string(name: 'branch', value: "${params.branch}")]
+                build job: 'DEV_pipeline_next', parameters: [string(name: 'branch', value: "${params.branch}")]
             }
         }
     }
