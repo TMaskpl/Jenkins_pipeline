@@ -1,0 +1,13 @@
+pipeline {
+    agent any
+    parameters {
+        string(name:"branch", defaultValue:"fromDownstream", description:"Branch to checkout project")
+    }
+    stages {
+        stage("Check branch") {
+            steps {
+                echo "$params.branch"
+            }
+        }
+    }
+}

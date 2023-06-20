@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    parameters {
+        string(name:"branch", defaultValue:"fromUpstream", description:"Branch to checkout project")
+    }
     options {
         ansiColor('vga')
     }
@@ -38,17 +41,14 @@ pipeline {
 
         stage('Remove snapshot...') {
             steps {
-                script {
-                    echo 'Remove snapshot...'
-                }
+                build job: 'DEV_pipeline_down', parameters: [string(name: 'branch', value: "${params.branch}")]
             }
         }
     }
 
     post {
         failure {
-            echo "Failed stage name: ${FAILED_STAGE}"
-            slackSend (color: '#FF0000', channel: 'tmaskpl', message: """FAILED_STAGE: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL})""")
+            echo "Failed stage "
         }
     }
 }
