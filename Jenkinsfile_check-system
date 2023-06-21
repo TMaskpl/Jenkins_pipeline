@@ -4,11 +4,7 @@ pipeline {
     agent any
     parameters {
         // string defaultValue: 'pve-host', description: 'Podaj nazwe hosta PVE', name: 'host_vm'
-        choice(
-        name: 'host_vm',
-        choices: 'tmask-pro\ntc01-pve\ntc02-pve\ntc03-pve\ntc04-pve\nintech-pve\nkrispol-pve\nkppve01\nkppve02',
-        description: 'Podaj nazwe hosta PVE'
-        )
+        choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
         string defaultValue: '666', description: 'Podaj id vm', name: 'vm_id'
         string defaultValue: 'win-host', description: 'Podaj nazwe hosta Windows', name: 'win_vm'
         booleanParam defaultValue: true, description: 'Aktualizacja Windows', name: 'run_update'
