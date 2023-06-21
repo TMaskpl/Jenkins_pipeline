@@ -26,7 +26,7 @@ pipeline {
             }
         }
 
-        stage('Mikrotik Windows ...') {
+        stage('Update mikrotik stable ...') {
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
