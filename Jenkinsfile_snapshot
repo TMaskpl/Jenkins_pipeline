@@ -1,0 +1,52 @@
+def FAILED_STAGE
+
+pipeline {
+    agent any
+    parameters {
+        choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
+        string defaultValue: '666', description: 'Podaj id vm', name: 'vm_id'
+    }
+    options {
+        ansiColor('xterm')
+    }
+    stages {
+        stage('Cleaning... ') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Git clone...') {
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Clone repository...'
+                    git branch: 'main', url: 'https://github.com/TMaskpl/Pipline-update-windows-on-PVE.git'
+                }
+            }
+        }
+
+        stage('Create snapshot...') {
+            when {
+                expression { 
+                    return params.create_snap
+                }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Create snapshot...'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e host_vm=${host_vm} -e vm_id=${vm_id}', playbook: 'create_snapshot.yml', tags: 'snap'
+                }
+            }
+        }
+    }
+
+
+    post {
+        failure {
+            echo "Failed stage name: ${FAILED_STAGE}"
+            slackSend (color: '#FF0000', channel: 'tmaskpl', message: """FAILED_STAGE: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL})""")
+        }
+    }
+}
