@@ -31,7 +31,7 @@ pipeline {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Check mikrotik version...'
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_check_version.yml', tags: 'info'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_check_version.yml'
                 }
             }
         }
