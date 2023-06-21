@@ -26,11 +26,11 @@ pipeline {
             }
         }
 
-        stage('Update mikrotik stable ...') {
+        stage('Check mikrotik version ...') {
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
-                    echo 'Update mikrotik stable...'
+                    echo 'Check mikrotik version...'
                     ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_check_version.yml', tags: 'updates'
                 }
             }
