@@ -8,6 +8,7 @@ pipeline {
     }
     options {
         ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
     }
     stages {
         stage('Cleaning... ') {

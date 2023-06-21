@@ -3,7 +3,6 @@ def FAILED_STAGE
 pipeline {
     agent any
     parameters {
-        // string defaultValue: 'pve-host', description: 'Podaj nazwe hosta PVE', name: 'host_vm'
         choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
         string defaultValue: '500', description: 'Podaj id vm', name: 'vm_id'
         string defaultValue: 'win-host', description: 'Podaj nazwe hosta Windows jeśli chcesz wykonać Update', name: 'win_vm'
@@ -12,6 +11,7 @@ pipeline {
         booleanParam defaultValue: false, description: 'Czy skasować snap po aktualizacji', name: 'remove_snap'
     }
     options {
+        buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
         ansiColor('xterm')
     }
     stages {
@@ -51,7 +51,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Create snapshot...'
                     build job: 'DEV_create_snapshot_proxmox_vm', parameters: [
-                        string(name: 'host_vm', value: "${host_vm}")
+                        string(name: 'host_vm', value: "${host_vm}"),
                         string(name: 'vm_id', value: "${vm_id}")
                     ]
                 }
