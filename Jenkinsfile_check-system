@@ -1,7 +1,9 @@
 def FAILED_STAGE
 
 pipeline {
+
     agent any
+    
     parameters {
         choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
         string defaultValue: '500', description: 'Podaj id vm', name: 'vm_id'
@@ -10,10 +12,12 @@ pipeline {
         booleanParam defaultValue: true, description: 'Tworzenie snapshot', name: 'create_snap'
         booleanParam defaultValue: false, description: 'Czy skasować snap po aktualizacji', name: 'remove_snap'
     }
+
     options {
         buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
         ansiColor('xterm')
     }
+
     stages {
         stage('Cleaning... ') {
             steps {
@@ -40,6 +44,7 @@ pipeline {
                 }
             }        
         }
+
         stage('Create snapshot...') {
             when {
                 expression { 
@@ -54,6 +59,21 @@ pipeline {
                         string(name: 'host_vm', value: "${host_vm}"),
                         string(name: 'vm_id', value: "${vm_id}")
                     ]
+                }
+            }
+        }
+
+        stage('Update Windows ...') {
+            when {
+                expression { 
+                    return params.run_update
+                }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Update Windows...'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e win_vm=${win_vm}', playbook: 'windows_update.yml', tags: 'updates'
                 }
             }
         }
