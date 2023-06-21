@@ -1,5 +1,7 @@
 def FAILED_STAGE
 
+script { currentbuild.description = 'New Description' }
+
 pipeline {
 
     agent any
