@@ -5,7 +5,6 @@ pipeline {
     parameters {
         // string defaultValue: 'pve-host', description: 'Podaj nazwe hosta PVE', name: 'host_vm'
         choice(
-        defaultValue: 'tmask-pro',
         name: 'host_vm',
         choices: 'tmask-pro\ntc01-pve\ntc02-pve\ntc03-pve\ntc04-pve\nintech-pve\nkrispol-pve\nkppve01\nkppve02',
         description: 'Podaj nazwe hosta PVE'
