@@ -79,6 +79,25 @@ pipeline {
                 }
             }
         }
+
+        stage('Remove snapshot...') {
+            when {
+                expression { 
+                    return params.remove_snap
+                }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Remove snapshot...'
+                    build job: 'DEV_remove_snapshot_proxmox_vm', parameters: [
+                        string(name: 'host_vm', value: "${host_vm}"),
+                        string(name: 'vm_id', value: "${vm_id}")
+                    ]
+                }
+            }
+        }
+
     }
 
 
