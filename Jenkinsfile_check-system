@@ -40,7 +40,23 @@ pipeline {
                 }
             }        
         }
+        stage('Create snapshot...') {
+            when {
+                expression { 
+                    return params.create_snap
+                }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Create snapshot...'
+                    build job: 'Pipeline DEV_create_snapshot_proxmox_vm', parameters: [string(name: 'host_vm', value: "${host_vm}")], [string(name: 'vm_id', value: "${vm_id}")]
+                }
+            }
+        }
     }
+
+
     post {
         failure {
             echo "Failed stage name: ${FAILED_STAGE}"
