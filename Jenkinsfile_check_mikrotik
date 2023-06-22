@@ -44,9 +44,6 @@ pipeline {
                     string 'mt_id'
                 }
             }
-            environment {
-                commitId = "${mt_id}"
-            }
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
@@ -55,17 +52,6 @@ pipeline {
                 }
             }
         }
-
-        stage('TEST') {
-            steps {
-                script {
-                    sh '''
-                    echo ${commitId}
-                    '''
-                }
-            }
-        }
-
     }
 
 
