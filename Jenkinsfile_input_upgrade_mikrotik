@@ -37,19 +37,18 @@ pipeline {
             }
         }
 
-        stage('Wprowadz nazwę mikrotika...') {
-            steps {
-                input id: 'mt_id', message: 'Wprowadz nazwę mikrotika z inventory', parameters: [string(defaultValue: '', description: '', name: 'mt_id')]
-                sh "echo ${mt_id}"
-            }
-        }
-
         stage('Upgrade mikrotik stable ...') {
+            input {
+                message 'Wprowadz nazwę mikrotika z inventory'
+                parameters {
+                    string 'mt_id'
+                }
+            }
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Upgrade mikrotik stable...'
-                     ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_upgrade.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_upgrade.yml'
                 }
             }
         }
