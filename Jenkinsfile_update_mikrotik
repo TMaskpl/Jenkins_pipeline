@@ -32,7 +32,7 @@ pipeline {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Update mikrotik stable...'
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}' '-e vm_id=${ver}', playbook: 'mikrotik_update.yml', tags: 'updates'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id} -e vm_id=${ver}', playbook: 'mikrotik_update.yml', tags: 'updates'
                 }
             }
         }
