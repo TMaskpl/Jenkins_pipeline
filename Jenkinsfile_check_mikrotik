@@ -40,7 +40,13 @@ pipeline {
         stage('Wprowadz nazwę mikrotika...') {
             steps {
                 script {
-                    input id: 'mt_id', message: 'Wprowadz nazwę mikrotika z inventory', parameters: [string(defaultValue: '', description: '', name: 'mt_id')]
+                    input {
+                        message 'Wprowadz nazwę mikrotika z inventory'
+                        id 'mikrotik'
+                        parameters {
+                            string 'mt_id'
+                        }
+                    }
                     sh "echo ${mt_id}"
                 }
             }
