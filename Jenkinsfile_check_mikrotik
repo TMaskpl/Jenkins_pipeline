@@ -2,9 +2,9 @@ def FAILED_STAGE
 
 pipeline {
     agent any
-    parameters {
-        string defaultValue: 'mt_id', description: 'Podaj nazwe mikrotika z inventory', name: 'mt_id'
-    }
+    // parameters {
+    //     string defaultValue: 'mt_id', description: 'Podaj nazwe mikrotika z inventory', name: 'mt_id'
+    // }
     options {
         ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
@@ -23,6 +23,24 @@ pipeline {
                     echo 'Clone repository...'
                     git branch: 'main', credentialsId: 'pro_gitlab_secret', url: 'https://gitlab.com/dniemczok/ansible-mikrotik.git'
                 }
+            }
+        }
+
+        stage('Pliki inventory ansible') {
+            steps {
+                script {
+                    sh '''
+                    echo ${WORKSPACE}
+                    cat /var/jenkins_home/inventory/mikrotikhost
+                    '''
+                }
+            }
+        }
+
+        stage('Wprowadz nazwę mikrotika...') {
+            steps {
+                input id: 'mt_id', message: 'Wprowadz nazwę mikrotika z inventory', parameters: [string(defaultValue: '', description: '', name: 'mt_id')]
+                sh "echo ${mt_id}"
             }
         }
 
