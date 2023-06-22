@@ -37,19 +37,13 @@ pipeline {
             }
         }
 
-        stage('Wprowadz nazwę mikrotika...') {
+        stage('Check mikrotik version ...') {
             input {
                 message 'Wprowadz nazwę mikrotika z inventory'
                 parameters {
                     string 'mt_id'
                 }
             }
-            steps{
-                sh "echo ${mt_id}"
-            }
-        }
-
-        stage('Check mikrotik version ...') {
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
