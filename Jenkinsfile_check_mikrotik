@@ -40,7 +40,6 @@ pipeline {
         stage('Wprowadz nazwę mikrotika...') {
             input {
                 message 'Wprowadz nazwę mikrotika z inventory'
-                id 'mikrotik'
                 parameters {
                     string 'mt_id'
                 }
