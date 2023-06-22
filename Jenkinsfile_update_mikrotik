@@ -4,6 +4,7 @@ pipeline {
     agent any
     parameters {
         string defaultValue: 'mt_id', description: 'Podaj nazwe mikrotika z inventory aby wykonać Update', name: 'mt_id'
+        choice choices: ["long-term", "stable", "testing"], description: 'Wybierz wersje mikrotika', name: 'ver'
     }
     options {
         ansiColor('xterm')
@@ -31,7 +32,7 @@ pipeline {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Update mikrotik stable...'
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_update.yml', tags: 'updates'
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}' '-e vm_id=${ver}', playbook: 'mikrotik_update.yml', tags: 'updates'
                 }
             }
         }
