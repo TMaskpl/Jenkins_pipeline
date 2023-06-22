@@ -39,7 +39,7 @@ pipeline {
 
         stage('Wprowadz nazwę mikrotika...') {
             steps {
-                script {
+
                     input {
                         message 'Wprowadz nazwę mikrotika z inventory'
                         id 'mikrotik'
@@ -48,7 +48,7 @@ pipeline {
                         }
                     }
                     sh "echo ${mt_id}"
-                }
+
             }
         }
 
