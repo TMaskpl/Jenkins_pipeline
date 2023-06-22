@@ -38,18 +38,14 @@ pipeline {
         }
 
         stage('Wprowadz nazwę mikrotika...') {
-            steps {
-                script {
-                    input {
-                        message 'Wprowadz nazwę mikrotika z inventory'
-                        id 'mikrotik'
-                        parameters {
-                            string 'mt_id'
-                        }
-                    }
-                    sh "echo ${mt_id}"
+            input {
+                message 'Wprowadz nazwę mikrotika z inventory'
+                id 'mikrotik'
+                parameters {
+                    string 'mt_id'
                 }
             }
+            sh "echo ${mt_id}"
         }
 
         stage('Check mikrotik version ...') {
