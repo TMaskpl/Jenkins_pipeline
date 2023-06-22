@@ -45,7 +45,6 @@ pipeline {
                     string 'mt_id'
                 }
             }
-            sh "echo ${mt_id}"
         }
 
         stage('Check mikrotik version ...') {
