@@ -14,8 +14,7 @@ pipeline {
     }
 
     environment {          
-        def MT = ''
-        def VERSION = '${ver}'
+        def mt = ''
     }
 
     stages {
@@ -57,19 +56,19 @@ pipeline {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Check mikrotik version...'
-                    MT = "${mt_id}"
+                    mt = "${mt_id}"
                     ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_check_version.yml'
                     sleep 15
                 }
             }
         }
 
-        stage('Update mikrotik ${VERSION} ...') {
+        stage("Update mikrotik '${ver}' ...") {
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
-                    echo 'Update mikrotik ${ver}...'
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${MT} -e ver=${ver}', playbook: 'mikrotik_update.yml'
+                    echo "Update mikrotik '${ver}'..."
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt} -e ver=${ver}', playbook: 'mikrotik_update.yml'
                     // exit 0
                 }
             }
