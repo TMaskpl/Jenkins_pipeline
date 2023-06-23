@@ -49,15 +49,15 @@ pipeline {
             input {
                 message 'Wprowadz nazwę mikrotika z inventory'
                 parameters {
-                    string 'mt_id'
+                    string 'mikrotik'
                 }
             }
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
                     echo 'Check mikrotik version...'
-                    mt = "${mt_id}"
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mt_id}', playbook: 'mikrotik_check_version.yml'
+                    mt = "${mikrotik}"
+                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mikrotik}', playbook: 'mikrotik_check_version.yml'
                     sleep 15
                 }
             }
