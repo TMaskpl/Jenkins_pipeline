@@ -58,7 +58,7 @@ pipeline {
                     echo 'Check mikrotik version...'
                     mt = "${mikrotik}"
                     ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mikrotik}', playbook: 'mikrotik_check_version.yml'
-                    sleep 15
+                    // sleep 15
                 }
             }
         }
