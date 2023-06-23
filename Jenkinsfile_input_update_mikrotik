@@ -14,7 +14,7 @@ pipeline {
     }
 
     environment {          
-        mt = ''
+        def mt = ''
     }
 
     stages {
