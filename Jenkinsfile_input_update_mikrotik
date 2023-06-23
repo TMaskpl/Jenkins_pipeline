@@ -17,12 +17,12 @@ pipeline {
         def mt = ''
     }
 
-    // stages {
-    //     stage('Cleaning... ') {
-    //         steps {
-    //             cleanWs()
-    //         }
-    //     }
+    stages {
+        // stage('Cleaning... ') {
+        //     steps {
+        //         cleanWs()
+        //     }
+        // }
 
         stage('Git clone...') {
             steps {
@@ -79,7 +79,7 @@ pipeline {
                 }
             }
         }
-    
+    }
 
 
     post {
