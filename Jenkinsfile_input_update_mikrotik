@@ -5,7 +5,7 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ["long-term", "stable", "testing"], description: 'Wybierz wersje mikrotika', name: 'ver'
+        choice choices: [ "stable", "long-term", "testing"], description: 'Wybierz wersje mikrotika', name: 'ver'
     }
 
     options {
