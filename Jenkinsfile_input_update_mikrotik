@@ -76,7 +76,7 @@ pipeline {
                     echo 'Update mikrotik ${ver}...'
                     echo "${ver}"
                     echo "${mt}"
-                    ansiblePlaybook installation: 'Ansible', extras: "-e mt_id=${mt} -e ver=${ver}", playbook: 'mikrotik_update.yml'
+                    // ansiblePlaybook installation: 'Ansible', extras: "-e mt_id=${mt} -e ver=${ver}", playbook: 'mikrotik_update.yml'
                     // exit 0
                 }
             }
