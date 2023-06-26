@@ -71,7 +71,6 @@ pipeline {
                     echo "${VER}"
                     echo "${mt}"
                     ansiblePlaybook installation: 'Ansible', extras: "-e mt_id=${mt} -e ver=${VER}", playbook: 'mikrotik_update.yml'
-                    // exit 0
                 }
             }
         }
