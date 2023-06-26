@@ -58,19 +58,12 @@ pipeline {
                     echo "${mt}"
                     VER = "${ver}"
                     echo "${VER}"
-                    ansiblePlaybook installation: 'Ansible', extras: '-e mt_id=${mikrotik}', playbook: 'mikrotik_check_version.yml'
-                    // sleep 15
+                    ansiblePlaybook installation: 'Ansible', extras: "-e mt_id=${mikrotik}", playbook: 'mikrotik_check_version.yml'
                 }
             }
         }
 
         stage('Update mikrotik ${ver}...') {
-            // input {
-            //     message 'Wprowadz nazwę mikrotika z inventory'
-            //     parameters {
-            //         string 'mikrotik'
-            //     }
-            // }
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
