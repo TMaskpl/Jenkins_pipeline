@@ -2,7 +2,7 @@ def FAILED_STAGE;
 def mt;
 def ver;
 
-pipeline {
+node {
 
     agent any
 
