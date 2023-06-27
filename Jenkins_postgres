@@ -8,6 +8,10 @@ pipeline {
         booleanParam defaultValue: false, description: 'Tworzenie bazy danej', name: 'create_db'
     }
 
+    environment {
+        tmask = credentials('sudo_pass')
+    }
+
     options {
         ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
@@ -42,14 +46,11 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: 'sudo_pass', variable: 'tmask')]) {
-                    script {
-                        FAILED_STAGE=env.STAGE_NAME
-                        echo "${db}"
-                        echo "${host}"
-                        echo "${tmask}"                        
-                        ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=${tmask}", playbook: 'pg-create-db.yml'
-                    }
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo "${db}"
+                    echo "${host}"                     
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=${tmask}", playbook: 'pg-create-db.yml'
                 }
             }
         }
