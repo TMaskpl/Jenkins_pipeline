@@ -1,6 +1,4 @@
 def FAILED_STAGE
-def host;
-def db;
 
 pipeline {
     agent any
