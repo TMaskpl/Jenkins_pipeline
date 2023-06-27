@@ -42,12 +42,13 @@ pipeline {
                 }
             }
             steps {
-                withCredentials([string(credentialsId: 'sudo_pass', variable: 'tmask')])
-                script {
-                    FAILED_STAGE=env.STAGE_NAME
-                    echo "${db}"
-                    echo "${host}"
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=${tmask}", playbook: 'pg-create-db.yml'
+                withCredentials([string(credentialsId: 'sudo_pass', variable: 'tmask')]) {
+                    script {
+                        FAILED_STAGE=env.STAGE_NAME
+                        echo "${db}"
+                        echo "${host}"
+                        ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=${tmask}", playbook: 'pg-create-db.yml'
+                    }
                 }
             }
         }
