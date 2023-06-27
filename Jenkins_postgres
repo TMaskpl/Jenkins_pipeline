@@ -50,7 +50,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo "${db}"
                     echo "${host}"                     
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=${tmask}", playbook: 'pg-create-db.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e sudo_pass=testy123", playbook: 'pg-create-db.yml'
                 }
             }
         }
