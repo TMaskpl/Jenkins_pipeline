@@ -4,12 +4,12 @@ pipeline {
     agent any
 
     parameters {
-        choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
-        string defaultValue: '500', description: 'Podaj id vm', name: 'vm_id'
-        string defaultValue: 'win-host', description: 'Podaj nazwe hosta Windows jeśli chcesz wykonać Update', name: 'win_vm'
-        booleanParam defaultValue: false, description: 'Aktualizacja Windows', name: 'run_update'
-        booleanParam defaultValue: true, description: 'Tworzenie snapshot', name: 'create_snap'
-        booleanParam defaultValue: false, description: 'Czy skasować snap po aktualizacji', name: 'remove_snap'
+        // choice choices: ['tmask-pro', 'tc01-pve', 'tc02-pve', 'tc03-pve', 'tc04-pve', 'intech-pve', 'krispol-pve', 'kppve01', 'kppve02'], description: 'Wybierz nazwę hosta Proxmox', name: 'host_vm'
+        // string defaultValue: '500', description: 'Podaj id vm', name: 'vm_id'
+        // string defaultValue: 'win-host', description: 'Podaj nazwe hosta Windows jeśli chcesz wykonać Update', name: 'win_vm'
+        booleanParam defaultValue: false, description: 'Tworzenie bazy danej', name: 'create_db'
+        // booleanParam defaultValue: true, description: 'Tworzenie snapshot', name: 'create_snap'
+        // booleanParam defaultValue: false, description: 'Czy skasować snap po aktualizacji', name: 'remove_snap'
     }
 
     options {
@@ -33,7 +33,25 @@ pipeline {
             }
         }
 
-
+        stage('Create db in postgres...') {
+            when {
+                expression { 
+                    return params.create_db
+                }
+            }
+            input {
+                message 'Nazwa bazy danych'
+                parameters {
+                    string 'db'
+                }
+            }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    ansiblePlaybook installation: 'Ansible', extras: "-e host=${host} -e db=${db}", playbook: 'pg-create-db.yml'
+                }
+            }
+        }
 
 
     post {
