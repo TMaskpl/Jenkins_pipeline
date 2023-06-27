@@ -5,6 +5,9 @@ pipeline {
 
     parameters {
         string defaultValue: 'tmask-psql15', description: 'Nazwa hosta z Postgresql', name: 'host'
+        string defaultValue: '10.20.222.204', description: 'IP or hostname Postgresql', name: 'phost'
+        string defaultValue: 'tmask', description: 'Username Postgresql', name: 'puser'
+        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'pdb'
         booleanParam defaultValue: false, description: 'Tworzenie bazy danej', name: 'create_db'
     }
 
@@ -46,7 +49,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo "${db}"
                     echo "${host}"                     
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db}", playbook: 'pg-create-db.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e phost=${phost} -e puser=${puser} -e pdb=${pdb}", playbook: 'pg-create-db.yml'
                 }
             }
         }
