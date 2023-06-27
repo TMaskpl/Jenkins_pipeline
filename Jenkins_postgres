@@ -46,7 +46,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo "${db}"
                     echo "${host}"
-                    ansiblePlaybook installation: 'Ansible', extras: "-e host=${host} -e db=${db}", playbook: 'pg-create-db.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db}", playbook: 'pg-create-db.yml'
                 }
             }
         }
