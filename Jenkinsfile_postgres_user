@@ -4,11 +4,12 @@ pipeline {
     agent any
 
     parameters {
-        string defaultValue: 'tmask-psql15', description: 'Nazwa hosta z Postgresql', name: 'host'
-        string defaultValue: '10.20.222.204', description: 'IP or hostname Postgresql', name: 'phost'
-        string defaultValue: 'tmask', description: 'Username Postgresql', name: 'puser'
-        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'pdb'
-        booleanParam defaultValue: false, description: 'Tworzenie bazy danej', name: 'create_db'
+        string defaultValue: 'tmask-psql15', description: 'Nazwa hosta z Postgresql', name: 'HOST'
+        string defaultValue: '10.20.222.204', description: 'IP or hostname Postgresql', name: 'PHOST'
+        string defaultValue: 'tmask', description: 'Username Postgresql', name: 'PUSER'
+        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'PGB'
+        string defaultValue: 'tmaskpl', description: 'Dodanie użytkownika', name: 'PGUSER'
+        string defaultValue: 'tmaskpl', description: 'Dodanie użytkownika', name: 'PGPASS'
     }
 
     options {
@@ -32,24 +33,13 @@ pipeline {
             }
         }
 
-        stage('Create db in postgres...') {
-            when {
-                expression { 
-                    return params.create_db
-                }
-            }
-            input {
-                message 'Nazwa bazy danych'
-                parameters {
-                    string 'db'
-                }
-            }
+        stage('Create user to postgres...') {
             steps {
                 script {
                     FAILED_STAGE=env.STAGE_NAME
-                    echo "${db}"
-                    echo "${host}"                     
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${host} -e d=${db} -e phost=${phost} -e puser=${puser} -e pdb=${pdb}", playbook: 'pg-create-db.yml'
+                    echo "${PGUSER}"
+                    echo "${PGPASS}"                     
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${HOST} -e u=${PGUSER} -e p=${PGPASS} -e phost=${PHOST} -e puser=${PUSER} -e pdb=${PDB}", playbook: 'pg-create-db.yml'
                 }
             }
         }
