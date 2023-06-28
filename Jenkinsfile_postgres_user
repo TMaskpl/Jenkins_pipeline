@@ -39,7 +39,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo "${PGUSER}"
                     echo "${PGPASS}"                     
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${HOST} -e u=${PGUSER} -e p=${PGPASS} -e phost=${PHOST} -e puser=${PUSER} -e pdb=${PDB}", playbook: 'pg-create-db.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${HOST} -e u=${PGUSER} -e p=${PGPASS} -e phost=${PHOST} -e puser=${PUSER} -e pdb=${PDB}", playbook: 'pg-create-user.yml'
                 }
             }
         }
