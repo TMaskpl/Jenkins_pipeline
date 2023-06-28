@@ -7,7 +7,7 @@ pipeline {
         string defaultValue: 'tmask-psql15', description: 'Nazwa hosta z Postgresql', name: 'HOST'
         string defaultValue: '10.20.222.204', description: 'IP or hostname Postgresql', name: 'PHOST'
         string defaultValue: 'tmask', description: 'Username Postgresql', name: 'PUSER'
-        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'PGB'
+        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'PDB'
         string defaultValue: 'pguser001', description: 'Dodanie użytkownika', name: 'PGUSER'
         string defaultValue: 'testy123', description: 'Dodanie użytkownika', name: 'PGPASS'
     }
