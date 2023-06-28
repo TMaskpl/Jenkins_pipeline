@@ -7,7 +7,7 @@ pipeline {
         string defaultValue: 'tmask-psql15', description: 'Nazwa hosta z Postgresql', name: 'HOST'
         string defaultValue: '10.20.222.204', description: 'IP or hostname Postgresql', name: 'PHOST'
         string defaultValue: 'tmask', description: 'Username Postgresql', name: 'PUSER'
-        string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'PDB'
+        // string defaultValue: 'tmaskpl', description: 'Maintenance_db Postgresql', name: 'PDB'
         string defaultValue: 'pguser001', description: 'Dodanie użytkownika', name: 'PGUSER'
         string defaultValue: 'testy123', description: 'Dodanie użytkownika', name: 'PGPASS'
     }
@@ -39,7 +39,7 @@ pipeline {
                     FAILED_STAGE=env.STAGE_NAME
                     echo "${PGUSER}"
                     echo "${PGPASS}"                     
-                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${HOST} -e u=${PGUSER} -e p=${PGPASS} -e phost=${PHOST} -e puser=${PUSER} -e pdb=${PDB}", playbook: 'pg-create-user.yml'
+                    ansiblePlaybook installation: 'Ansible', extras: "-e h=${HOST} -e u=${PGUSER} -e p=${PGPASS} -e phost=${PHOST} -e puser=${PUSER}", playbook: 'pg-create-user.yml'
                 }
             }
         }
