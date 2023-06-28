@@ -58,7 +58,7 @@ pipeline {
     post {
         failure {
             echo "Failed stage name: ${FAILED_STAGE}"
-            slackSend (color: '#FF0000', channel: 'tmaskpl', icon_emoji: 'red_circle', message: """FAILED_STAGE: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL})""")
+            slackSend (color: '#FF0000', channel: 'tmaskpl', message: """FAILED_STAGE: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL})""")
         }
         changed {
             echo "Changed stage name: ${FAILED_STAGE}"
