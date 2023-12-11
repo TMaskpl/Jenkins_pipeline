@@ -1,0 +1,53 @@
+def FAILED_STAGE
+
+pipeline {
+    agent any
+    // parameters {
+    //     string defaultValue: 'mt_id', description: 'Podaj nazwe mikrotika z inventory', name: 'mt_id'
+    // }
+    options {
+        ansiColor('xterm')
+        buildDiscarder(logRotator(numToKeepStr: '7', artifactNumToKeepStr: '3'))
+    }
+    stages {
+        stage('Cleaning... ') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Git clone...') {
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Clone repository...'
+                    git branch: 'main', credentialsId: 'pro_gitlab_secret', url: 'https://github.com/TMaskpl/Jenkins_pipeline.git'
+                }
+            }
+        }
+
+        stage('Check systeminfo ...') {
+            // input {
+            //     message 'Wprowadz nazwę mikrotika z inventory'
+            //     parameters {
+            //         string 'mt_id'
+            //     }
+            // }
+            steps {
+                script {
+                    FAILED_STAGE=env.STAGE_NAME
+                    echo 'Check systeminfo...'
+                    ansiblePlaybook installation: 'Ansible', playbook: 'HomeLab/systeminfo.yml'
+                }
+            }
+        }
+    }
+
+
+    // post {
+    //     failure {
+    //         echo "Failed stage name: ${FAILED_STAGE}"
+    //         slackSend (color: '#FF0000', channel: 'tmaskpl', message: """FAILED_STAGE: Job "${env.STAGE_NAME} ${env.JOB_NAME} [${env.BUILD_NUMBER}]" (${env.BUILD_URL})""")
+    //     }
+    // }
+}
