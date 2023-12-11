@@ -1,0 +1,11 @@
+---
+- hosts: kubernetes
+  become: true
+  become_user: root
+  gather_facts: false
+  vars:
+    ansible_host_key_checking: false
+    favcolor: blue
+  tasks:
+  - name: "Rebooting the cloud server/bare metal box"
+    community.general.reboot:

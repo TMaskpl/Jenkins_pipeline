@@ -1,0 +1,26 @@
+---
+- hosts: pve
+  become: true
+  become_user: root
+  gather_facts: false
+  vars:
+    ansible_host_key_checking: false
+    favcolor: blue
+  tasks:
+  - name: "Stop VM"
+    shell: |
+      qm stop 400
+      sleep 5
+      qm stop 401
+      sleep 5
+      qm stop 402
+      sleep 5
+      qm stop 403
+      sleep 5
+      qm stop 404
+      sleep 5
+      qm stop 405
+      sleep 5
+    register: output_var
+    args:
+      executable: /bin/bash

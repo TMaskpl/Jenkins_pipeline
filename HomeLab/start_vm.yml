@@ -1,0 +1,27 @@
+---
+- hosts: pve
+  become: true
+  become_user: root
+  gather_facts: false
+  vars:
+    ansible_host_key_checking: false
+    favcolor: blue
+  tasks:
+  - name: "Start VM"
+    shell: |
+      qm start 400
+      sleep 5
+      qm start 401
+      sleep 5
+      qm start 402
+      sleep 5
+      qm start 403
+      sleep 5
+      qm start 404
+      sleep 5
+      qm start 405
+      sleep 5
+      pct start 501
+    register: output_var
+    args:
+      executable: /bin/bash
