@@ -1,0 +1,16 @@
+[all:vars]
+ansible_user='dniemczok'
+ansible_become=yes
+ansible_become_method=sudo
+ansible_become_pass='DN1234zok!'
+
+[kubernetes]
+10.222.20.132
+10.222.20.131
+10.222.20.129
+10.222.20.128
+10.222.20.127
+10.222.20.126
+
+[pve]
+10.222.20.149 ansible_user=root
