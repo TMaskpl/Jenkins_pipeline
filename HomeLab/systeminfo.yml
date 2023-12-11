@@ -1,0 +1,23 @@
+---
+- hosts: kubernetes
+  become: true
+  become_user: root
+  gather_facts: false
+  vars:
+    ansible_host_key_checking: false
+    favcolor: blue
+  tasks:
+  - name: "Check system"
+    shell: |
+      echo "Check CPU"
+      echo " "
+      ps aux | sort -nrk 3,3 | head -n 5
+      echo "Check RAM"
+      echo " "
+      free -h
+      echo "Check Disk"
+      echo " "
+      df -h
+    register: output_var
+    args:
+      executable: /bin/bash
